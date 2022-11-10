@@ -2,7 +2,14 @@
 
 To test some workflows with OIH
 
-This chant would be a slashcommand parser that would trigger OIH flows and receive the results of this flows in a callback that an ending component (not included here would call)
+This chat includes a series of slash-commands that trigger OIH flows and receive the results of this flows in a callback that an ending component (not included here would call)
+
+## Available commands
+
+- /auth: triggers an auth flow
+- /me: returns your profile data from MS graph api
+- /run-flow <flow-id>: runs an specific OIH Flow id
+
 
 ## Development
 
@@ -15,7 +22,7 @@ $ yarn install
 $ yarn start_client
 
 # build for production and launch server
-$ yarn start_server
+$ USER_TOKEN=<mi_bearer_token> yarn start_server
 
 # generate static project
 $ yarn generate

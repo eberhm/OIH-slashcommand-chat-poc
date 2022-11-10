@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-const USER_TOKEN = 'O2NjzhvEVxSTzgj9YFR8Qu6f5vqFeQp1NoJKcc_3qPDCKYy6lk8d05YC9lB5fo2lAnVivvc70G7FL0zgLfRqe1PJ4c6ib2gAQgGds3V2UwRrqtCJuzFM25BvdJ1Ms072rGQrHodInX480gLk8exyhALsNF_5kMW_3101fQVe9dw';
+const USER_TOKEN = process.env.USER_TOKEN;
 
 async function processSlashCommand(request, secretId) {
     const parts = request.split(' ');
@@ -15,6 +15,9 @@ async function processSlashCommand(request, secretId) {
       case '/run-flow':
         return runFlow(params, secretId)
         break;
+    case '/me':
+        return runFlow(['636bc7d038eb81e80bc6cec2', ...params], secretId)
+        break;
       default:
         console.log('command not recognized ' + command)
         return 'command not recognized ' + command
@@ -25,7 +28,7 @@ async function processSlashCommand(request, secretId) {
   async function startAuthRequest(params) {
   
     const body = {
-      "scope": "User.Read",
+      "scope": params[0] || "User.Read",
       "secretName": "anything-secret",
       "successUrl": "http://localhost:3333/callback"
     };
@@ -47,18 +50,15 @@ async function processSlashCommand(request, secretId) {
   
   async function runFlow(params, secretId) {
   
+    console.log('running flow with:', { params, secretId });
+
     const response = await fetch(`http://webhooks.example.com/hook/${params[0]}`, {
       "headers": {
         "accept": "application/json, text/plain, */*",
         "content-type": "application/json",
-        "sec-ch-ua": "\"Google Chrome\";v=\"107\", \"Chromium\";v=\"107\", \"Not=A?Brand\";v=\"24\"",
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": "\"macOS\"",
-        "Referer": "http://web-ui.example.com/",
-        "authorization": `Bearer ${USER_TOKEN}`,
-        "Referrer-Policy": "strict-origin-when-cross-origin"
+        "authorization": `Bearer ${USER_TOKEN}`
       },
-      "body": JSON.stringify({...params[1], secretId}),
+      "body": JSON.stringify({params: params.splice(1), secretId}),
       "method": "POST"
     });
     
