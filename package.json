@@ -4,7 +4,7 @@
   "description": "Forked from ichlas/simple-chat-websocket-reactjs",
   "main": "index.js",
   "scripts": {
-    "start_server": "node server.js",
+    "start_server": "nodemon server/server.js",
     "start_client": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
@@ -19,5 +19,8 @@
     "react-dom": "^16.5.0",
     "react-scripts": "1.1.5",
     "ws": "^7.4.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
   }
 }
