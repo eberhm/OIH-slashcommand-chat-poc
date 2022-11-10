@@ -10,6 +10,7 @@ const wss = new WebSocket.Server({ port: WS_PORT });
 const app = express();
 
 let hackyConnection;
+let hackySecretId;
 
 // WEBSOCKETS SERVER
 wss.on('connection', function connection(ws) {
@@ -22,7 +23,7 @@ wss.on('connection', function connection(ws) {
     const dataObj = JSON.parse(data)
     if (/\/.*/.test(dataObj.message)) {
       console.log('was a slash command')
-      const response = await processSlashCommand(dataObj.message)
+      const response = await processSlashCommand(dataObj.message, hackySecretId)
 
       ws.send(JSON.stringify({
         name: 'slashCommand',
@@ -52,6 +53,7 @@ app.post('/oih-receiver', (req, res) => {
 app.get('/callback', (req, res) => {
   console.log(req.query)
   hackyConnection.send(JSON.stringify({name: 'callback', message: JSON.stringify(req.query)}))
+  hackySecretId = req.query.secretId;
   //from here you could trigger a flow that takes a secret id creates a ms teams call
   res.send(req.query)
 })

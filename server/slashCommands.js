@@ -2,18 +2,18 @@ const fetch = require('node-fetch');
 
 const USER_TOKEN = 'O2NjzhvEVxSTzgj9YFR8Qu6f5vqFeQp1NoJKcc_3qPDCKYy6lk8d05YC9lB5fo2lAnVivvc70G7FL0zgLfRqe1PJ4c6ib2gAQgGds3V2UwRrqtCJuzFM25BvdJ1Ms072rGQrHodInX480gLk8exyhALsNF_5kMW_3101fQVe9dw';
 
-async function processSlashCommand(request) {
+async function processSlashCommand(request, secretId) {
     const parts = request.split(' ');
     const command = parts[0];
     const params = parts.splice(1)
     console.log('slashCommand Params:', params);
-    
+
     switch (command) {
       case '/auth':
         return startAuthRequest(params)
         break;
       case '/run-flow':
-        return runFlow(params)
+        return runFlow(params, secretId)
         break;
       default:
         console.log('command not recognized ' + command)
@@ -45,7 +45,7 @@ async function processSlashCommand(request) {
     return data;
   }
   
-  async function runFlow(params) {
+  async function runFlow(params, secretId) {
   
     const response = await fetch(`http://webhooks.example.com/hook/${params[0]}`, {
       "headers": {
@@ -58,7 +58,7 @@ async function processSlashCommand(request) {
         "authorization": `Bearer ${USER_TOKEN}`,
         "Referrer-Policy": "strict-origin-when-cross-origin"
       },
-      "body": JSON.stringify(params[1]),
+      "body": JSON.stringify({...params[1], secretId}),
       "method": "POST"
     });
     
