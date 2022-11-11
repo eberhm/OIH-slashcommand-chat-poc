@@ -23,14 +23,17 @@ A example for how this would work can be seen in the following diagram:
 6. The BE will send (via WS) to the frontend the oauth login Url
 
 
-We have developed and defined some OIH components:
+For enabling these use cases, we had to also do some other stuff:
 
 * A [new trigger](https://github.com/bmjuan/oih-dummy-test/blob/0e9abaf1c34e84df3ee4eb5e7ff5b15ba9433aee/component.json#L22) image was deployed by us allowing to run an oauth flow against the secret service
 * A [new action](https://github.com/bmjuan/oih-dummy-test/blob/0e9abaf1c34e84df3ee4eb5e7ff5b15ba9433aee/component.json#L32) image was deployed to send the result of the flow to the FE
 * The [component implementing this trigger and action](https://github.com/bmjuan/oih-dummy-test) was registered in the OIH platform. You can see the example definition for them [here](./docs/component-definition.json).
-* A new flow was defined in the OIH. You can see an example fo the definition [here](./docs/flow-definition.json).
+* A new flow was defined in the OIH. You can see an example of the definition [here](./docs/flow-definition.json).
+* Create a [oauth item](https://github.com/eberhm/openintegrationhub/blob/520ea5475fcb37cc57808e75b512c18b209c6f59/notes.md?plain=1#L151) in secrent-service API
+* [Modify the ComponentOrchestrator](https://github.com/eberhm/openintegrationhub/blob/520ea5475fcb37cc57808e75b512c18b209c6f59/lib/component-orchestrator/src/ComponentOrchestrator.js#L479) to enable injecting the secretId in the webooks call
 
-THere are other flows and components defined for the /me command. See [docs](.docs) folder for more info. Here you can find the rerpository for the ms-connector: https://github.com/bmjuan/ms-office-adapter
+
+There are other flows and components defined for the /me command. See [docs](.docs) folder for more info. Here you can find the rerpository for the ms-connector: https://github.com/bmjuan/ms-office-adapter
 
 ## Available commands
 
@@ -38,6 +41,13 @@ THere are other flows and components defined for the /me command. See [docs](.do
 - /me: returns your profile data from MS graph api
 - /run-flow <flow-id>: runs an specific OIH Flow id
 
+### Steps to the test
+1. Recover your Bearer token by login into your OIH local installation
+2. run server using your Bearer token as env var (USER_TOKEN)
+3. run client side
+4. send /auth in the chat
+5. copy authUrl and put it in a browser and finalize the process
+6. send /me in the chat. You should see you basic profile info in JSON in the shat as a response
 
 ## Development
 
