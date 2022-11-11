@@ -1,0 +1,30 @@
+{
+    name: 'OIH OAuth Flow',
+    description: 'Starts an OAuth Flow and sends it the the FE',
+    graph: {
+      nodes: [
+        {
+          id: 'step1-startAuth',
+          componentId: '636cc4c696bbf806a2937497',
+          function: 'startAuth',
+          name: 'step1 - Starting Auth flow',
+          description: 'startAuth call'
+        },
+        {
+          id: 'step_2-sendToFront',
+          componentId: '636cc4c696bbf806a2937497',
+          function: 'sendToFront',
+          name: 'Step2 sendToFront',
+          description: 'sendToFront call'
+        }
+      ],
+      edges: [
+        {
+          source: 'step1-startAuth',
+          target: 'step_2-sendToFront'
+        }
+      ]
+    },
+    type: 'ordinary',
+    cron: ''
+  }

@@ -1,0 +1,29 @@
+{
+    name: 'Test MS Component',
+    description: 'Testing MS Component in a flow',
+    graph: {
+      nodes: [
+        {
+          id: 'step_1-getMe',
+          componentId: 'XXX',
+          function: 'getMe',
+          name: 'Getting myData',
+          description: 'Getting my data'
+        },
+        {
+          id: 'step_2-sendToFront',
+          componentId: 'XXX',
+          function: 'sendToFront',
+          name: 'Step2 sendToFront',
+          description: 'sendToFront call'
+        }
+      ],
+      edges: [
+        {
+          source: 'step_1-getMe',
+          target: 'step_2-sendToFront'
+        }
+      ]
+    },
+    type: 'ordinary'
+  }

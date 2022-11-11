@@ -1,0 +1,11 @@
+{
+    distribution: {
+      type: 'docker',
+      image: 'eberhm/ms-office-adapter:latest'
+    },
+    name: 'Test MS-office adapter',
+    description: 'Adapter to MS Office',
+    access: 'public',
+    isGlobal: false,
+    active: false
+  }

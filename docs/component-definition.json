@@ -1,0 +1,11 @@
+{
+    distribution: {
+      type: 'docker',
+      image: 'eberhm/test-oih-connector:latest'
+    },
+    name: 'OIH Hackweek connector',
+    description: 'Onlyfy OIH tests component for NewWork Hackweek 20',
+    access: 'public',
+    isGlobal: false,
+    active: false
+  }
